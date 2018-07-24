@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,4 +35,30 @@ class GameController extends Controller
             'users' => $users,
         ]);
     }
+
+    /**
+     * @Route("/user/{id}", name="user_id", requirements={"id"="\d+"})
+     */
+    public function user(Request $request, UserRepository $userRepository, int $id){
+
+        $user = $userRepository->find($id);
+
+
+        return $this->render('game/userFiche.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/user/{byFirstname}", name="user_firstname")
+     * @ParamConverter("user", options={"mapping"={"byFirstname"="firstname"}})
+     */
+    public function firstname(Request $request, UserRepository $userRepository, User $user){
+
+        return $this->render('game/userFirstName.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+
 }

@@ -46,6 +46,10 @@ class SecurityController extends Controller
         $user = new User();
         $form = $this->createForm(LoginUserType::class, $user);
 
+        if($form->isSubmitted() && $form->isValid()){
+            return $this->redirectToRoute('home');
+        }
+
         return $this->render('security/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'form' => $form->createView()

@@ -8,30 +8,31 @@
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
 
-    <div class="example-wrapper">
-        <h1>Page d'administration</h1>
+    <h1 class="text-center">Page d'administration</h1>
 
-        <h2>Bienvenue {{ app.user.firstname }} </h2>
-        <ul>
-            {% for user in users %}
-                <li>
-                    Utilisateur :{{ user.firstname }} {{  user.lastname }} <br />
-                    Date de Naissance : {{ user.birthday|date('d/m/y') }} <br>
+    <br>
+    <div class="row">
+        {% for user in users %}
+            <div class="col-md-4">
+                <div class="card bg-light text-dark" style="padding:15px;height:175px;margin-bottom:15px;">
+                    <ul>
+                        Utilisateur : {{ user.firstname }} {{  user.lastname }} <br />
+                        Date de Naissance : {{ user.birthday|date('d/m/y') }} <br>
+                        {% if user.roles|length >0 %}
+                            {% dump user.roles|length %}
+                            Rôle :
+                            {% for role in user.roles %}
+                                {% if role %}
+                                    <ul><li>{{ role }}</li></ul>
+                                {% endif %}
 
-                    {% if user.roles[0] != 0 %}
-                        {% dump user.roles|length %}
-                        Rôle :
-                        {% for role in user.roles %}
-                            {% if role %}
-                                <ul><li>{{ role }}</li></ul>
-                            {% endif %}
-
-                        {% endfor %}
-                    {% endif %}
-                    <a href="{{ path( 'user_remove', {'id': user.id}) }} "> Supprimer </a> <br><br>
-                </li>
-
-            {% endfor %}
-        </ul>
+                            {% endfor %}
+                        {% endif %}
+                        <a href="{{ path( 'user_remove', {'id': user.id}) }} "> Supprimer </a> <br><br>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
     </div>
+
 {% endblock %}

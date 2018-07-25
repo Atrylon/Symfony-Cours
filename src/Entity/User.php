@@ -34,7 +34,7 @@ class User implements UserInterface
 
     /**
      * @Assert\Email()
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -50,7 +50,7 @@ class User implements UserInterface
     private $articles;
 
     /**
-     * @ORM\Column(type="simple_array")
+     * @ORM\Column(type="simple_array", nullable=true)
      */
     private $roles;
 
@@ -58,8 +58,8 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Length(min="5", max="25")
      * @Assert\Regex(
-     *     pattern     = "/^[a-z]+$/i",
-     *     htmlPattern = "^[a-zA-Z]+$",
+     *     pattern     = "/^[a-z0-9]+$/i",
+     *     htmlPattern = "^[a-zA-Z0-9]+$",
      *     message = "mot de passe incorrect")
      * @ORM\Column(type="string", length=255)
      */

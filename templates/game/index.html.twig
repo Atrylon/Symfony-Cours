@@ -9,6 +9,7 @@
 </style>
 
 <div class="example-wrapper">
+    <h1>Ajouter un utilisateur </h1>
     {{ form_start(form) }}
     Firstname : {{  form_widget(form.firstname) }}
     <br />
@@ -19,13 +20,9 @@
     Birthday : {{  form_widget(form.birthday.day) }}
     {{  form_widget(form.birthday.month) }}
     {{  form_widget(form.birthday.year) }}
+    <br />
+    {{ form_widget(form.password) }}
     {{ form_end(form) }}
 
 </div>
-
-    <ul>
-        {% for user in users %}
-        <li>{{ user.firstname }} {{ user.lastname }} - {{ user.email}} - né le {{ user.birthday|date('d/m/y') }}</li>
-        {% endfor %}
-    </ul>
 {% endblock %}

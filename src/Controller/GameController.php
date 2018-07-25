@@ -11,27 +11,31 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class GameController extends Controller
 {
     /**
      * @Route("/game", name="game")
      */
-    public function index( Request $request, UserRepository $userRepository)
+    public function index( Request $request, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            return $this->redirectToRoute('home');
         }
 
         $users = $userRepository->findAll();
 
-        return $this->render('game/register.html.twig', [
+        return $this->render('game/index.html.twig', [
             'form' => $form->createView(),
             'users' => $users,
         ]);

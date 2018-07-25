@@ -8,20 +8,35 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
 
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h2 class="text-center">Bienvenue {{ app.user.firstname }}</h2>
+        <br>
+        <div class="row">
         {% for user in users %}
-            <h1>Hello {{ user.firstname }} ! </h1>
-            <ul>
-    {% for article in user.articles %}
-                <li>
-                    {{ article.title }}
-                    <a href="{{ path( 'article_remove', {'id': article.id}) }} "> Supprimer </a>
-                </li>
-            {% endfor %}
-            </ul>
-            <a href="{{ path('user_id', {'id':user.id}) }}"> Voir plus </a>
+            <div class="col-md-4 text-center">
+                <div class="card bg-light text-dark" style="padding:15px;height:125px;margin-bottom:15px;">
+                    <h4><a href="{{ path( 'user_firstname', {'byFirstname': user.firstname}) }} "> {{ user.firstname }} {{ user.lastname }} </a></h4>
+                    <ul>
+                        {% for article in user.articles %}
+                            <li>
+                                {{ article.title }}
+                                <a href="{{ path( 'article_remove', {'id': article.id}) }} "> Supprimer </a>
+                            </li>
+                        {% endfor %}
+                        <a href="{{ path('user_id', {'id':user.id}) }}"> Voir plus.... </a>
+                    </ul>
+                </div>
+            </div>
         {% endfor %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Bienvenue sur le site !</h2>
+                <p>Il est un peu vide mais ça c'est parce que vous n'êtes pas connecté....</p>
+            </div>
+        </div>
+    {% endif %}
 
-</div>
 {% endblock %}

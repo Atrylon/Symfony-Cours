@@ -12,11 +12,14 @@
 
         {% for user in users %}
             <h1>Hello {{ user.firstname }} ! </h1>
-            {% for article in user.articles %}
-                <p>
+            <ul>
+    {% for article in user.articles %}
+                <li>
                     {{ article.title }}
-                </p>
+                    <a href="{{ path( 'article_remove', {'id': article.id}) }} "> Supprimer </a>
+                </li>
             {% endfor %}
+            </ul>
             <a href="{{ path('user_id', {'id':user.id}) }}"> Voir plus </a>
         {% endfor %}
 

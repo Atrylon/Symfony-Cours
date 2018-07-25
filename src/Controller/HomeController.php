@@ -13,6 +13,7 @@ class HomeController extends Controller
      */
     public function index(UserRepository $userRepository)
     {
+
         $users = $userRepository->findAll();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

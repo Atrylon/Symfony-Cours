@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,7 @@ class GameController extends Controller
 
         $users = $userRepository->findAll();
 
-        return $this->render('game/index.html.twig', [
+        return $this->render('game/register.html.twig', [
             'form' => $form->createView(),
             'users' => $users,
         ]);
@@ -58,6 +59,15 @@ class GameController extends Controller
         return $this->render('game/userFirstName.html.twig', [
             'user' => $user,
         ]);
+    }
+
+    /**
+     * @Route("/game/remove/{id}", name="user_remove")
+     */
+    public function remove(User $user, EntityManagerInterface $entityManager){
+        $entityManager->remove($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('admin');
     }
 
 

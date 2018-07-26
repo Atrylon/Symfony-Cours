@@ -30,6 +30,7 @@ class GameController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('notice', 'Ajout effectué!');
             return $this->redirectToRoute('home');
         }
 
@@ -69,6 +70,12 @@ class GameController extends Controller
      * @Route("/game/remove/{id}", name="user_remove")
      */
     public function remove(User $user, EntityManagerInterface $entityManager){
+
+        $articles = $user->getArticles();
+        foreach($articles as $article){
+            $article->setUser(null);
+        }
+
         $entityManager->remove($user);
         $entityManager->flush();
         return $this->redirectToRoute('admin');

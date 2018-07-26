@@ -28,6 +28,8 @@ class ArticleController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
+            $this->addFlash('notice', 'Article ajouté!');
+            return $this->redirectToRoute('home');
         }
 
         $articles= $articleRepository->findAll();

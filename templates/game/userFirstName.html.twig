@@ -8,28 +8,36 @@
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
 
+    <div class="row">
+        <div class="col-md-8 offset-2 ">
+            <div class="card bg-light text-dark" style="padding:15px;margin-top:20px;">
+                {% if user is not null %}
 
-    {% if user is not null %}
-        Fiche de : {{ user.firstname}} {{ user.lastname }}
-        <br />
-        Email : {{ user.email }}
-        <br />
-        Née le : {{ user.birthday|date('d/m/y') }}
-        <br><br>
-        Article(s) :
-        <ul>
-            {% for article in user.articles %}
-                <li>
-                    <h4>{{ article.title }}</h4>
-                    <i>Crée le {{ article.createdAt|date('d/m/y')}} à {{ article.createdAt|date('h:i') }}</i>
-                    <p>
-                        {{ article.content }}
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        Pas d'utilisateur correspondant à cet prénom.
-    {% endif %}
+                    <h2>Fiche de : {{ user.firstname}} {{ user.lastname }}</h2>
+                    <b>
+                        <br />
+                        Email : {{ user.email }}
+                        <br />
+                        Née le : {{ user.birthday|date('d/m/y') }}
+                        <br><br>
+                        Article(s) :
+                    </b>
+                    <ul>
+                        {% for article in user.articles %}
+                            <li>
+                                <h4>{{ article.title }}</h4>
+                                <i>Crée le {{ article.createdAt|date('d/m/y')}} à {{ article.createdAt|date('h:i') }}</i>
+                                <p>
+                                    {{ article.content }}
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Pas d'utilisateur correspondant à cet prénom.
+                {% endif %}</div>
+        </div>
+    </div>
+
 
 {% endblock %}

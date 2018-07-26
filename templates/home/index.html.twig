@@ -15,7 +15,7 @@
         <div class="row">
         {% for user in users %}
             <div class="col-md-4 text-center">
-                <div class="card bg-light text-dark" style="padding:15px;height:125px;margin-bottom:15px;">
+                <div class="card bg-light text-dark" style="padding:15px;height:100%;margin-bottom:15px;">
                     <h4><a href="{{ path( 'user_firstname', {'byFirstname': user.firstname}) }} "> {{ user.firstname }} {{ user.lastname }} </a></h4>
                     <ul>
                         {% for article in user.articles %}

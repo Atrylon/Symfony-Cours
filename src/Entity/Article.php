@@ -32,7 +32,7 @@ class Article
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;

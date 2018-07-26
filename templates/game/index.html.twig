@@ -15,7 +15,9 @@
     <br />
     Lastname : {{  form_widget(form.lastname) }}
     <br />
-    Email : {{  form_widget(form.email) }}
+    Email :
+        {{ form_errors(form.email) }}
+        {{  form_widget(form.email) }}
     <br />
     Birthday : {{  form_widget(form.birthday.day) }}
     {{  form_widget(form.birthday.month) }}

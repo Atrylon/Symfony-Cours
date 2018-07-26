@@ -5,12 +5,16 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- */
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="Email déjà utilisé !")
+ * */
 class User implements UserInterface
 {
     /**
@@ -56,11 +60,7 @@ class User implements UserInterface
 
     /**
      * @Assert\NotBlank()
-     * @Assert\Length(min="5", max="25")
-     * @Assert\Regex(
-     *     pattern     = "/^[a-z0-9]+$/i",
-     *     htmlPattern = "^[a-zA-Z0-9]+$",
-     *     message = "mot de passe incorrect")
+     * @Assert\Length(min="5")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
